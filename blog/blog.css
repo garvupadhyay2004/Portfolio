@@ -1,0 +1,304 @@
+/* Blog hero */
+.blog-hero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 64px 32px 20px;
+}
+.blog-hero h1 { font-size: clamp(32px, 4.5vw, 50px); margin-bottom: 16px; }
+.blog-hero .lede { max-width: 56ch; color: var(--text-dim); font-size: 17px; }
+
+/* Post list */
+.blog-list { display: flex; flex-direction: column; gap: 28px; padding-top: 20px; }
+.post-card {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+}
+.post-thumb {
+  display: block;
+  background: linear-gradient(160deg, #142038, #0c1424);
+  min-height: 180px;
+}
+.post-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: left center; }
+.post-thumb.no-photo { display: flex; align-items: center; justify-content: center; }
+.post-thumb.no-photo::after {
+  content: "Add a cover image";
+  font-size: 13px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+.post-card-body { padding: 26px 26px 26px 0; display: flex; flex-direction: column; gap: 10px; }
+.post-date { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.post-card-body h2 { font-size: 22px; line-height: 1.3; }
+.post-card-body h2 a:hover { color: var(--accent); }
+.post-card-body p { color: var(--text-dim); font-size: 15px; }
+.read-more { color: var(--accent); font-size: 14px; font-weight: 600; margin-top: 4px; }
+
+@media (max-width: 700px) {
+  .post-card { grid-template-columns: 1fr; }
+  .post-thumb { min-height: 160px; }
+  .post-card-body { padding: 20px; }
+}
+
+/* ---------- Single post page ---------- */
+.post-header {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 64px 32px 32px;
+}
+.post-header .post-date { display: block; margin-bottom: 14px; }
+.post-header h1 { font-size: clamp(28px, 4.2vw, 42px); margin-bottom: 12px; }
+.post-header .post-meta { color: var(--text-dim); font-size: 14px; }
+
+.post-cover {
+  max-width: var(--maxw);
+  margin: 0 auto 40px;
+  padding: 0 32px;
+}
+.post-cover img {
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.post-body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+  font-size: 17px;
+  color: var(--text-dim);
+}
+.post-body h2 { color: var(--text); font-size: 24px; margin: 40px 0 14px; }
+.post-body p { margin-bottom: 18px; line-height: 1.7; }
+.post-body ul { margin: 0 0 18px; padding-left: 20px; list-style: disc; }
+.post-body ol { margin: 0 0 18px; padding-left: 20px; }
+.post-body li { margin-bottom: 8px; line-height: 1.6; }
+.post-body blockquote {
+  margin: 24px 0;
+  padding: 14px 22px;
+  border-left: 3px solid var(--accent);
+  background: var(--card);
+  border-radius: 0 10px 10px 0;
+  font-style: italic;
+  color: var(--text);
+}
+.post-body .flow {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin: 20px 0;
+  line-height: 1.6;
+}
+.post-body code {
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--card);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.post-body figure { margin: 32px 0; }
+.post-body figure img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.post-body figcaption {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  font-family: var(--mono);
+}
+.post-body a { color: var(--accent); text-decoration: underline; }
+
+.post-back {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px 40px;
+}
+.post-back a { color: var(--accent); font-weight: 600; font-size: 14px; }
+
+/* ---------- Owner link on blog list ---------- */
+.owner-link {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-bottom: 1px dashed var(--border);
+}
+.owner-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- Admin: password gate ---------- */
+.admin-lock {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 90px 32px;
+  display: flex;
+  justify-content: center;
+}
+.admin-lock-card {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 32px;
+}
+.admin-lock-card h1 { font-size: 24px; margin: 10px 0 12px; }
+.admin-lock-card .lede { font-size: 14px; margin-bottom: 22px; }
+#lockForm { display: flex; flex-direction: column; gap: 12px; }
+#lockForm input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+.admin-error { color: #f16565; font-size: 13px; margin-top: 14px; }
+
+/* ---------- Admin: editor ---------- */
+.admin-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.admin-form { display: flex; flex-direction: column; gap: 20px; max-width: 760px; }
+.admin-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.admin-form input[type="text"],
+.admin-form input[type="password"],
+.admin-form textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var(--sans);
+}
+.admin-form input[type="file"] { font-size: 13px; font-weight: 400; color: var(--text-dim); }
+
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.editor-toolbar button {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text-dim);
+}
+.editor-toolbar button:hover { color: var(--accent); border-color: var(--accent); }
+
+.editor-body {
+  min-height: 260px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.editor-body:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-dim);
+}
+.editor-body h2 { font-size: 20px; margin: 20px 0 10px; }
+.editor-body blockquote {
+  margin: 16px 0;
+  padding: 10px 18px;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+}
+.editor-body ul, .editor-body ol { padding-left: 22px; margin: 10px 0; }
+.editor-body a { color: var(--accent); }
+
+.admin-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.admin-note { color: #4ade80; font-size: 13px; }
+
+.admin-instructions {
+  max-width: 760px;
+  margin-top: 30px;
+  padding: 22px 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.admin-instructions h3 { font-size: 16px; margin-bottom: 12px; }
+.admin-instructions ol { padding-left: 20px; margin-bottom: 14px; }
+.admin-instructions li { margin-bottom: 8px; font-size: 14px; color: var(--text-dim); }
+.admin-instructions code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.snippet-box {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--bg);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  resize: vertical;
+}
+
+.saved-posts-list { display: flex; flex-direction: column; gap: 10px; max-width: 760px; margin-top: 16px; }
+.saved-post-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  font-size: 14px;
+}
+.saved-post-actions { display: flex; gap: 8px; }
+.saved-post-actions button {
+  font-size: 12px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-dim);
+}
+.saved-post-actions button:hover { color: var(--accent); border-color: var(--accent); }
+.saved-post-empty { color: var(--text-dim); font-size: 14px; }
+
+@media (max-width: 640px) {
+  .admin-row { grid-template-columns: 1fr; }
+  .admin-head { flex-direction: column; }
+}
+/* ---------- Comments (Giscus) ---------- */
+.comments {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+.comments h3 { font-size: 18px; margin-bottom: 20px; }

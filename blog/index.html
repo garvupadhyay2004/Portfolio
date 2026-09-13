@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog — Gaurav Upadhyay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="blog.css" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark">GU</span>
+      <span class="brand-name">GAURAV UPADHYAY</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#skills">Skills</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="nav-cta">Blog</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle light and dark theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
+      </svg>
+    </button>
+    <button id="navToggle" class="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="blog-hero">
+    <div class="eyebrow"><span class="dot"></span>Writing</div>
+    <h1>Notes from building with data.</h1>
+    <p class="lede">Projects, experiments, internships, and the questions I found interesting along the way.</p>
+    <a href="admin.html" class="owner-link">Are u Gaurav? Add a post →</a>
+  </section>
+
+  <section class="section blog-list" id="blogList">
+    <!--
+      ADD A NEW POST:
+      Easiest: open admin.html, unlock it with your password, and use the editor —
+      it can save a local preview and download a ready-to-publish file for you.
+
+      Manual alternative:
+      1. Copy blog/posts/_template.html, rename it, and edit the title/date/content.
+      2. Copy this <article class="post-card"> block, point the href at your new file,
+         and update the thumbnail, date, title and excerpt.
+    -->
+    <article class="post-card">
+      <a href="posts/exploring-youth-segmentation-through-telecom-data.html" class="post-thumb">
+        <img src="../assets/blog/Youth-segmentation.jpg" alt="" onerror="this.parentElement.classList.add('no-photo')" />
+      </a>
+      <div class="post-card-body">
+        <span class="post-date">September 2026</span>
+        <h2><a href="posts/exploring-youth-segmentation-through-telecom-data.html">Exploring Youth Segmentation Through Telecom Data</a></h2>
+        <p>A research-driven approach to identifying student clusters in Bengaluru using telecom data, geospatial analysis, and distance-based segmentation.</p>
+        <a class="read-more" href="posts/exploring-youth-segmentation-through-telecom-data.html">Read the post ↗</a>
+     </div>
+    </article>
+
+    <article class="post-card">
+      <a href="posts/business-analyst-internship.html" class="post-thumb">
+        <img src="../assets/blog/ba-intern-cover.jpg" alt="" onerror="this.parentElement.classList.add('no-photo')" />
+      </a>
+      <div class="post-card-body">
+        <span class="post-date">August 2026</span>
+        <h2><a href="posts/business-analyst-internship.html">Building a churn-analytics agent with local LLMs</a></h2>
+        <p>Notes from my Business Analyst internship at Bharti Airtel — turning plain-language telecom queries into SQL and executive reports with Llama 3, Qwen 2.5, and Phi-3 Mini.</p>
+        <a class="read-more" href="posts/business-analyst-internship.html">Read the post ↗</a>
+      </div>
+    </article>
+
+    <article class="post-card">
+      <a href="posts/marketing-trainee-internship.html" class="post-thumb">
+        <img src="../assets/blog/marketing-trainee-cover.jpg" alt="" onerror="this.parentElement.classList.add('no-photo')" />
+      </a>
+      <div class="post-card-body">
+        <span class="post-date">August 2025</span>
+        <h2><a href="posts/marketing-trainee-internship.html">What 21 lakh prepaid users taught me about A/B testing</a></h2>
+        <p>My first season at Airtel, as a Marketing Trainee — reading OTT usage data, running TG/CG campaigns, and the ₹49 top-up test that moved the needle.</p>
+        <a class="read-more" href="posts/marketing-trainee-internship.html">Read the post ↗</a>
+      </div>
+    </article>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>© <span id="year"></span> Gaurav Upadhyay</span>
+  <a href="../index.html">← Back to portfolio</a>
+  <span>Built around real data</span>
+</footer>
+
+<script src="../script.js"></script>
+<script src="blog-store.js"></script>
+<script>
+  // Add any owner-saved posts from this browser to the top of the list.
+  const ownerPosts = getOwnerPosts();
+  const list = document.getElementById('blogList');
+  ownerPosts.forEach(post => {
+    list.insertBefore(renderOwnerPostCard(post), list.firstChild);
+  });
+</script>
+</body>
+</html>

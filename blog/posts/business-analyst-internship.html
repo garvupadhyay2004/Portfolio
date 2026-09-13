@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building a churn-analytics agent with local LLMs — Gaurav Upadhyay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css" />
+<link rel="stylesheet" href="../blog.css" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../../index.html" class="brand">
+      <span class="brand-mark">GU</span>
+      <span class="brand-name">GAURAV UPADHYAY</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../../index.html#work">Work</a>
+      <a href="../../index.html#experience">Experience</a>
+      <a href="../../index.html#skills">Skills</a>
+      <a href="../../index.html#about">About</a>
+      <a href="../index.html" class="nav-cta">Blog</a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle light and dark theme">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
+      </svg>
+    </button>
+    <button id="navToggle" class="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <article>
+    <header class="post-header">
+      <span class="post-date">August 2026 · Bharti Airtel, Gurugram</span>
+      <h1>Building a churn-analytics agent with local LLMs</h1>
+      <p class="post-meta">Business Analyst Intern · 8 min read</p>
+    </header>
+
+    <div class="post-cover">
+      <!-- Swap this for a real screenshot: put it in blog/assets/ and update the src -->
+      <img src="../../assets/blog/ba-intern-cover.jpg" alt="Cover image for the churn analytics agent post" onerror="this.closest('.post-cover').style.display='none'" />
+    </div>
+
+    <div class="post-body">
+      <p>One of the first things I learned during my internship at Bharti Airtel was that having data is only half the problem.</p>
+      <p>Telecom teams have enormous amounts of customer information. The difficult part is turning that information into an answer quickly.</p>
+      <p>A seemingly simple business question such as:</p>
+      <blockquote>"How many customers are showing signs of churn?"</blockquote>
+      <p>can eventually become a sequence of technical tasks — understanding the question, identifying the relevant fields, writing SQL, filtering the data, aggregating the results, interpreting the numbers, and finally explaining what those numbers mean from a business perspective.</p>
+      <p>The problem becomes even more interesting when the person asking the question isn't thinking in SQL. They are thinking in business questions.</p>
+      <p>That led me to a question:</p>
+      <blockquote>What if a business user could simply ask the question in natural language and an AI system could take care of the analytical workflow?</blockquote>
+      <p>That became the idea behind the Telecom Churn Analytics Agent I worked on during my internship. The project was part of a broader internship project around Telecom Customer Analytics and Geospatial Intelligence Using Agentic Systems, carried out in the Marketing Department under the Data Analytics team at Bharti Airtel.</p>
+
+      <h2>From a chatbot to an analytical system</h2>
+      <p>My first instinct could have been to connect an LLM to the dataset and ask it questions. But that isn't really an analytics system — a language model can generate a convincing answer without necessarily performing the underlying analysis correctly.</p>
+      <p>So instead of treating the LLM as a chatbot, I started thinking about the problem as a workflow. The basic idea became:</p>
+      <p class="flow">Question → Understand → Plan → Query → Analyse → Interpret → Respond</p>
+      <p>This distinction was important. The system needed to understand what the user wanted, determine what needed to be done, execute the appropriate analytical operation, and then turn the result into something useful.</p>
+      <p>The internship report describes this workflow as:</p>
+      <blockquote>User Query → Understand Task → Plan Analysis → Select Required Tool → Execute → Validate/Interpret → Generate Response.</blockquote>
+      <p>That was my introduction to thinking about Agentic AI for data analytics.</p>
+
+      <h2>The Planner and the Orchestrator</h2>
+      <p>Instead of giving the entire responsibility to one model, I separated the workflow into different responsibilities.</p>
+      <p>The Planner was responsible for understanding the business question and determining what kind of analysis was required.</p>
+      <p>Then came the Orchestrator. Its job was to coordinate the workflow and determine what should happen next. For example, a question about customer characteristics could require structured SQL analysis. A question involving a location could additionally require geospatial processing.</p>
+      <p>So the system wasn't simply asking, "What should the LLM answer?" It was asking, "What steps are actually required to answer this question?" That change in mindset made the system much more interesting to build.</p>
+      <p>The report's architecture similarly separates the user interface, query understanding, agentic orchestration, local LLM, SQL/data, geospatial intelligence, analytics, insight generation and response layers.</p>
+
+      <h2>Making natural language talk to SQL</h2>
+      <p>The next challenge was connecting language to structured data. A user might ask, "Show me customers with high churn risk." The database doesn't understand that sentence — it understands tables, columns, filters, aggregations and SQL.</p>
+      <p>So the workflow became something like:</p>
+      <p class="flow">Natural-language question → LLM interprets the requirement → SQL is generated/selected → Database executes the query → Results return to the analytical workflow</p>
+      <p>This became one of the core parts of the prototype. For development, I used SQLite as the lightweight database layer. SQL provided the controlled mechanism for retrieving the relevant information before the results were passed to the analytical and reasoning stages.</p>
+      <p>This was one of the most useful things I learned: an LLM becomes much more useful for analytics when it is connected to actual tools and data rather than operating as an isolated text generator.</p>
+
+      <h2>Why local LLMs?</h2>
+      <p>Another interesting part of the project was that I wasn't relying entirely on cloud-based APIs. I experimented with locally running models, including Llama 3, Qwen 2.5 and Phi-3 Mini, using Ollama.</p>
+      <p>This introduced a completely different set of engineering considerations. Running an LLM locally isn't just download model → run model → done. You have to think about available hardware, model size, latency, memory usage, prompt design and the quality of the generated output.</p>
+      <p>I also had to think carefully about where the LLM should actually be used. The goal wasn't to make the LLM responsible for everything. Instead, it was used for tasks such as:</p>
+      <ul>
+        <li>Understanding natural-language questions</li>
+        <li>Interpreting analytical requirements</li>
+        <li>Supporting SQL generation</li>
+        <li>Reasoning about analytical results</li>
+        <li>Generating human-readable responses</li>
+      </ul>
+      <p>The report specifically documents this local-LLM workflow through Llama/Qwen and Ollama. For me, this was an important shift from "using an LLM" to "engineering an application around an LLM."</p>
+
+      <h2>Turning churn data into business questions</h2>
+      <p>Once the analytical pipeline was working, the next step was customer and churn analytics. Instead of simply returning rows from a database, the system was designed to support questions around customer characteristics and churn patterns and produce aggregated, interpretable results.</p>
+      <p>That matters because a business user generally doesn't want <code>customer_id = 10293, tenure = 7, usage = 2.3...</code></p>
+      <p>They want something closer to: "Customers with these characteristics represent a larger share of the identified churn segment."</p>
+      <p>The difference is small technically, but huge from a business perspective. The report describes this goal explicitly: the system should move beyond raw database outputs and turn analytical results into business-readable insights.</p>
+
+      <h2>Then I added geography</h2>
+      <p>The project became even more interesting when I started thinking about where customers were, not just who they were. Telecom data is inherently geographical — two customers with similar characteristics can have completely different business contexts depending on where they are located.</p>
+      <p>So I explored integrating:</p>
+      <ul>
+        <li>OpenStreetMap</li>
+        <li>Overpass API</li>
+        <li>Haversine distance</li>
+        <li>H3</li>
+        <li>S2</li>
+        <li>Geohash</li>
+        <li>Location-based filtering</li>
+      </ul>
+      <p>The objective was to allow customer analytics to include geographical context. Instead of asking only, "Which customers have this characteristic?", we could start thinking about "Which customers with this characteristic are located within a particular geographical area?" That was a significant conceptual upgrade to the analytics workflow.</p>
+
+      <h2>The other side of the project: marketing intelligence</h2>
+      <p>The churn agent wasn't the only AI work I explored during the internship. I also worked on a multi-agent Telecom Marketing AI Copilot, designed around use cases such as campaign planning, audience segmentation, geospatial analytics and recommendation generation.</p>
+      <p>This was where the technical work started connecting more directly with the Marketing side of the organization. Customer analytics wasn't just about predicting or understanding behaviour — it could also support questions such as:</p>
+      <ul>
+        <li>Who should be targeted?</li>
+        <li>Which customer segment is relevant?</li>
+        <li>Where are these customers located?</li>
+        <li>What campaign might be appropriate?</li>
+        <li>How can analytical results be converted into a recommendation?</li>
+      </ul>
+      <p>That broader combination of customer analytics, marketing, AI and geography became one of the most valuable parts of my internship.</p>
+
+      <h2>What building this taught me</h2>
+      <p>The biggest lesson wasn't actually about Llama, SQL or Python. It was about breaking down analytical problems.</p>
+      <p>Before this project, I mostly thought about data science in terms of: dataset → model → prediction.</p>
+      <p>Working on an agentic analytics system made me think differently: business question → reasoning → tools → data → analysis → interpretation → decision. That is much closer to how real analytical work happens.</p>
+      <p>I also learned that an LLM doesn't automatically make an analytics system intelligent. The surrounding architecture matters. The data layer matters. The tools matter. The prompts matter. And most importantly, the system needs a clear separation between reasoning and execution.</p>
+      <p>The final internship architecture brought together natural-language interaction, agentic orchestration, local LLMs, SQL-based analysis, geospatial intelligence and business-oriented insight generation.</p>
+      <p>For me, this project was less about building a chatbot and more about exploring what happens when AI becomes part of the analytical workflow itself. And that's probably the most valuable thing I took away from my time at Airtel.</p>
+    </div>
+
+    <div class="post-back">
+      <a href="../index.html">← Back to all posts</a>
+    </div>
+
+    <section class="comments">
+      <h3>Comments</h3>
+      <!-- Powered by Giscus (GitHub Discussions). Setup steps are in README.md. -->
+      <script src="https://giscus.app/client.js"
+        data-repo="YOUR-GITHUB-USERNAME/YOUR-REPO-NAME"
+        data-repo-id="PASTE-REPO-ID-FROM-GISCUS-APP"
+        data-category="General"
+        data-category-id="PASTE-CATEGORY-ID-FROM-GISCUS-APP"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </section>
+  </article>
+</main>
+
+<footer class="footer">
+  <span>© <span id="year"></span> Gaurav Upadhyay</span>
+  <a href="../../index.html">← Back to portfolio</a>
+  <span>Built around real data</span>
+</footer>
+
+<script src="../../script.js"></script>
+</body>
+</html>
