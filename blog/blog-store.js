@@ -143,10 +143,10 @@ function buildStandalonePostHtml(post) {
       <h3>Comments</h3>
       <!-- Powered by Giscus (GitHub Discussions). Setup steps are in README.md. -->
       <script src="https://giscus.app/client.js"
-        data-repo="YOUR-GITHUB-USERNAME/YOUR-REPO-NAME"
-        data-repo-id="PASTE-REPO-ID-FROM-GISCUS-APP"
+        data-repo="garvupadhyay2004/Portfolio"
+        data-repo-id="R_kgDOUZafjw"
         data-category="General"
-        data-category-id="PASTE-CATEGORY-ID-FROM-GISCUS-APP"
+        data-category-id="DIC_kwDOUZafj84DFhrm"
         data-mapping="pathname"
         data-strict="0"
         data-reactions-enabled="1"
